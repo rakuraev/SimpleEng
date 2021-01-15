@@ -64,6 +64,7 @@ export const mutations = {
     },
     refreshGameState(state) {
       state.words = []
+      state.res = 0
       state.gameStates.before = false
       state.gameStates.start = false
       state.gameStates.finish = false
