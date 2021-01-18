@@ -1,5 +1,5 @@
 <template>
-  <div class="game-start-btn" @click="toStart()" >Start</div>
+  <div class="game-start__btn" @click="toStart()">Start</div>
 </template>
 
 <script>
@@ -15,23 +15,39 @@ export default {
 
 
 <style lang="scss" scoped>
-.game-start-btn {
-  outline: none;
-  height: 400px;
-  width: 400px;
-  background: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 41px;
-  font-weight: 600;
-  font-size: 48px;
-  line-height: 58px;
-  color: #5f5f5f;
-  cursor: pointer;
+.game-start__btn {
+  @include nav-buttons;
+  margin-top: -50px;
+}
+@media (max-width: 768px) {
+  .game-start__btn {
+  @include nav-buttons;
+  height: 300px;
+  width: 300px;
+  margin-top: -50px;
+}
+}
+
+@media (min-width: 769px) {
+  .game-start__btn {
+  @include nav-buttons;
+  height: 300px;
+  width: 300px;
+  margin-top: -50px;
+}
+}
+
+@media (min-width: 900px) {
+   .game-start__btn {
+  @include nav-buttons;
+  margin-top: -50px;
+}
+}
+
+@media (min-width: 1200px) {
+   .game-start__btn {
+  @include nav-buttons;
+  margin-top: -50px;
+}
 }
 </style>

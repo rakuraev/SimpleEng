@@ -2,7 +2,10 @@
   <div class="game-form">
     <div class="game-form__counter">{{ counter + 1 }}/20</div>
     <div class="game-form__word">{{ currentWord }}</div>
-    <div class="game-form__options" :class="{'non-clickable':(isWrong||isRight)}">
+    <div
+      class="game-form__options"
+      :class="{ 'non-clickable': isWrong || isRight }"
+    >
       <div
         class="game-form__option"
         v-for="(option, index) in currentOptions"
@@ -13,12 +16,18 @@
         {{ option }}
       </div>
     </div>
-    <div class="game-form__next-word" @click="toNextWord" @keyup.enter="toNextWord">Next word</div>
+    <div
+      class="game-form__next-word"
+      @click="toNextWord"
+      @keyup.enter="toNextWord"
+    >
+      Next word
+    </div>
   </div>
 </template>
 
 <script>
-import {mapActions,mapGetters} from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     toFinish: {
@@ -34,147 +43,138 @@ export default {
   },
   data() {
     return {
-      counter:0,
+      counter: 0,
       currentWord: this.words[0].word,
       currentCorrectOption: this.words[0].correctOption,
-      currentOptions: this.words[0].options.slice().sort(() => Math.random() - 0.5),
+      currentOptions: this.words[0].options
+        .slice()
+        .sort(() => Math.random() - 0.5),
       isWrong: false,
       isRight: false,
     };
   },
-  computed:{
-    ...mapGetters('game',{res:'getGameResult'})
+  computed: {
+    ...mapGetters("game", { res: "getGameResult" }),
   },
   methods: {
-    ...mapActions('game',['resIncrement']),
+    ...mapActions("game", ["resIncrement"]),
     confirmOption(index, option) {
       if (option == this.currentCorrectOption) {
         this.isRight = index;
         this.isWrong = true;
-        this.resIncrement()
+        this.resIncrement();
       } else {
         this.isRight = this.currentOptions.indexOf(this.currentCorrectOption);
         this.isWrong = index;
       }
     },
-    toNextWord(){
-      if (this.counter<19){
-      this.counter++
-      this.isWrong = false
-      this.isRight = false
-      this.currentWord=this.words[this.counter].word,
-      this.currentCorrectOption=this.words[this.counter].correctOption,
-      this.currentOptions=this.words[this.counter].options.slice().sort(() => Math.random() - 0.5)
-      }else{
-        this.toFinish()
+    toNextWord() {
+      if (this.counter < 19) {
+        this.counter++;
+        this.isWrong = false;
+        this.isRight = false;
+        (this.currentWord = this.words[this.counter].word),
+          (this.currentCorrectOption = this.words[this.counter].correctOption),
+          (this.currentOptions = this.words[this.counter].options
+            .slice()
+            .sort(() => Math.random() - 0.5));
+      } else {
+        this.toFinish();
       }
-    }
+    },
   },
-
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .game-form {
-  width: 1200px;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include game-form;
   &__counter {
-    height: 50px;
-    width: 120px;
-    background: #f7f7f7;
-    border: 1px solid rgba(0, 0, 0, 0.11);
-    box-sizing: border-box;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    align-self: flex-end;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: #9a9a9a;
+    @include game-form__counter;
   }
   &__word {
-    width: 100%;
-    height: 250px;
-    background: #f7f7f7;
-    border: 1px solid rgba(0, 0, 0, 0.11);
-    box-sizing: border-box;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 35px;
-    font-weight: 600;
-    font-size: 72px;
-    line-height: 87px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9a9a9a;
+    @include game-form__word;
   }
   &__options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    &.non-clickable{
-      pointer-events: none;
-    }
+    @include game-form__options;
     .game-form__option {
-      margin-top: 30px;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 22px;
-      width: 500px;
-      height: 50px;
-      background: #f7f7f7;
-      border: 1px solid rgba(0, 0, 0, 0.11);
-      box-sizing: border-box;
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #9a9a9a;
-      &:hover {
-        background: #9cffa0;
-        border: 1px solid rgba(71, 255, 90, 0.11);
-        box-sizing: border-box;
-        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        color: #fff;
-        cursor: pointer;
-      }
-      &.wrong {
-        background: #FF6A6A;
-        border: 1px solid rgba(255, 0, 0, 0.11);
-        color: #fff;
-      }
-      &.right {
-       background: #9CFFA0;
-       border: 1px solid rgba(71, 255, 90, 0.11);
-       color: #fff;
-      }
+      @include game-form__option;
     }
   }
   &__next-word {
-    width: 600px;
-    height: 70px;
-    margin-top: 50px;
-    background: #9cffa0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-weight: 600;
-    font-size:22px;
-    line-height: 22px;
-    cursor: pointer;
+    @include game-form__next-word;
   }
 }
+@media (max-width: 768px) {
+  .game-form {
+    width: 400px;
+    &__counter {
+      height: 40px;
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    &__word {
+      height: 200px;
+      font-size: 52px;
+    }
+    .game-form__option {
+      margin-top: 20px;
+      width: 280px;
+    }
+    &__next-word {
+      margin-top: 30px;
+      width: 320px;
+    }
+  }
+}
+  @media (min-width: 769px) {
+    .game-form {
+      width: 750px;
+      &__counter {
+        height: 50px;
+        width: 120px;
+        margin-bottom: 20px;
+      }
+      &__word {
+        height: 250px;
+        font-size: 65px;
+      }
+      .game-form__option {
+        margin-top: 25px;
+        width: 400px;
+      }
+      &__next-word {
+        margin-top: 40px;
+        width: 500px;
+      }
+    }
+  }
+
+  @media (min-width: 900px) {
+    .game-form {
+      width: 890px;
+      &__counter {
+        height: 50px;
+        width: 120px;
+        margin-bottom: 25px;
+      }
+      &__word {
+        height: 200px;
+        font-size: 72px;
+      }
+      .game-form__option {
+        margin-top: 30px;
+        width: 500px;
+      }
+      &__next-word {
+        margin-top: 30px;
+        width: 600px;
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .game-form {
+      width: 1190px;
+    }
+  }
 </style>

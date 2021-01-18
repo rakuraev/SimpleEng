@@ -10,7 +10,7 @@ export default {
     title: 'client',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
@@ -21,7 +21,8 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-  'normalize.css/normalize.css'
+  'normalize.css/normalize.css',
+  '~assets/scss/mixins.scss'
   ],
   router: {
     middleware: ['auth']
@@ -42,13 +43,30 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/toast',
+    '@nuxtjs/style-resources'
   ],
-
+  styleResources: {
+    scss: ['./assets/scss/*.scss']
+  },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     baseURL:"http://api.javascriptizer.ru/"
   },
+  toast: {
+    position: 'top-right',
+    duration:'2000',
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+},
   auth: {
     strategies: {
       local: {
