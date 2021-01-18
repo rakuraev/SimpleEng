@@ -22,6 +22,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .game-finish {
+  margin-top: -50px;
   width: 1100px;
   height: 550px;
   background: #f7f7f7;
@@ -68,5 +69,34 @@ export default {
     color: #ffffff;
     cursor: pointer;
   }
+}
+@media screen and (max-width: 1200px) {
+  .game-finish {
+  width: 750px;
+  height: 600px;
+  &__res {
+    font-size: 88px;
+  }
+  &__exit-btn {
+    width: 650px;
+    height: 70px;
+    font-size: 25px;
+  }
+}
+}
+
+@media screen and (max-width: 768px) {
+  .game-finish {
+  width: 350px;
+  height: 600px;
+  &__res {
+    font-size: 88px;
+  }
+  &__exit-btn {
+    width: 320px;
+    height: 70px;
+    font-size: 25px;
+  }
+}
 }
 </style>
