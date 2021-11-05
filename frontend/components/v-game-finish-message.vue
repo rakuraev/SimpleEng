@@ -21,7 +21,7 @@ export default {
      }else if(this.res < 20){
          this.message = "Almost perfect";
      }else if(this.res >= 20){
-         this.message = "Perfect";
+         this.message = "Perfect!";
      }
     },
   },

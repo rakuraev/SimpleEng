@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  frontend:
+    command: npm run dev
+    volumes: 
+      - ./frontend:/usr/src/app
+    stdin_open: true
+    tty: true
+  api:
+    command: npm run dev
+    volumes: 
+      - ./api:/usr/src/api
+  nginx:
+    volumes:
+      - ./nginx/nginx.conf.dev:/etc/nginx/conf.d/nginx.conf

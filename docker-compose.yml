@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    command: npm run deploy
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    networks:
+      - simple-eng-docker-network
+    stdin_open: true
+    tty: true
+  api:
+    build: ./api
+    command: npm run start
+    ports:
+      - "4000:4000"
+    restart: on-failure
+    depends_on:
+      - mongo_db
+    environment:
+      - PORT=4000
+      - MONGO_URL=mongodb://mongo_db:27017/api
+    networks:
+      - simple-eng-docker-network
+  mongo_db:
+    image: mongo:latest
+    volumes:
+      - mongodb_api:/data/db
+    networks:
+      - simple-eng-docker-network
+  nginx:
+    image: nginx:stable-alpine
+    container_name: simple-eng-docker-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - simple-eng-docker-network
+volumes:
+  mongodb_api:
+
+networks:
+  simple-eng-docker-network:
+    driver: bridge

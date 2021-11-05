@@ -54,7 +54,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("game", { res: "getGameResult" }),
+    ...mapGetters({ words: "game/getWords"}),
   },
   methods: {
     ...mapActions("game", ["resIncrement"]),

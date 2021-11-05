@@ -60,7 +60,6 @@
 
 
 <script>
-import { register } from "~/server/controllers/auth";
 export default {
   data() {
     return {
